@@ -25,11 +25,13 @@ import os           # os directory level handling
 import signal       # To trap ctrl-c
 import sys          # To exit
 
+# Defining globally so ctrl-c can reference
+script_directory = "./vector_scripts_to_run"
+
 def main():
     # Capture ctrl-c
     signal.signal(signal.SIGINT, signal_handler)
 
-    script_directory = "./vector_scripts_to_run"
     # Lets try to make a directory if it doesn't exist:
     try:
         if not os.path.exists(script_directory):
@@ -71,6 +73,13 @@ def main():
 
 def signal_handler(sig, frame):
     print ("Ctrl-c caught")
+    print ("Removing files in " + script_directory)
+
+    list_of_files_in_dir = os.listdir(script_directory)
+
+    for file_name in list_of_files_in_dir:
+        os.remove(script_directory + "/" + file_name)
+
     sys.exit(0)
 
 if __name__ == "__main__":
