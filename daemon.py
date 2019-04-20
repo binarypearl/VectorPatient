@@ -19,11 +19,16 @@
 Make Vector say 'Hello World' in this simple Vector SDK example program.
 """
 from anki_vector.util import degrees, distance_mm, speed_mmps
-import anki_vector
-import time
-import os
+import anki_vector  # Robot stuff
+import time         # sleep
+import os           # os directory level handling
+import signal       # To trap ctrl-c
+import sys          # To exit
 
 def main():
+    # Capture ctrl-c
+    signal.signal(signal.SIGINT, signal_handler)
+
     script_directory = "./vector_scripts_to_run"
     # Lets try to make a directory if it doesn't exist:
     try:
@@ -57,6 +62,10 @@ def main():
                     print ("I had trouble removing the file?")
 
             time.sleep(1)
+
+def signal_handler(sig, frame):
+    print ("Ctrl-c caught")
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()
