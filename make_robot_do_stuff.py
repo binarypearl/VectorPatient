@@ -4,7 +4,7 @@ import time
 import daemon
 
 if __name__ == '__main__':
-    robot.say_text("I am Vector and Im going to move in a square and wait patiently!")
+    robot.say_text("I am Vector and Im going to move in a square and wait patiently!", duration_scalar=0.8)
 
     # Use a "for loop" to repeat the indented code 4 times
     # Note: the _ variable name can be used when you don't need the value

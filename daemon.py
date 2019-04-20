@@ -40,7 +40,7 @@ def main():
 
     args = anki_vector.util.parse_command_args()
     with anki_vector.Robot(args.serial) as robot:
-        robot.say_text("I am now in patient SDK mode.")
+        robot.say_text("I am now in patient SDK mode.", duration_scalar=0.8)
 
         while 1:
             list_of_files = os.listdir(script_directory)
@@ -50,7 +50,13 @@ def main():
                 
                 script_to_run_object = open(script_directory + "/" + file_name, "r")
 
-                exec(script_to_run_object.read())
+                try:
+                    exec(script_to_run_object.read())
+
+                except Exception as e:
+                    print ("Your plugin script crashed.  Fix and try again.\n")
+                    print (str(e) + "\n")
+                    robot.say_text("Your plugin script crashed, fix and try again, see console for details.", duration_scalar=0.6)
 
                 script_to_run_object.close()
 
